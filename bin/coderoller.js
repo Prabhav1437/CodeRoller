@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 import { Command } from 'commander';
+import chalk from 'chalk';
 import { startCommand } from '../commands/start.js';
 import { stopCommand } from '../commands/stop.js';
 import { todayCommand } from '../commands/today.js';
@@ -11,7 +12,17 @@ const program = new Command();
 program
     .name('coderoller')
     .description('Track your coding time locally and privately')
-    .version('1.0.0');
+    .version('1.0.0')
+    .addHelpText('before', `
+   ${chalk.cyan('____ ___  ____ ____ ____ ____ _    _    ____ ____')}
+   ${chalk.cyan('|    |  \\ |___ |__/ |  | |    |    |    |___ |__/')}
+   ${chalk.cyan('|___ |__/ |___ |  \\ |__| |___ |___ |___ |___ |  \\')}
+    `)
+    .addHelpText('after', `
+Example call:
+  $ coderoller start
+  $ coderoller today
+    `);
 
 program
     .command('start')
