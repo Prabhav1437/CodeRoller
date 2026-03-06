@@ -1,13 +1,19 @@
 {
   "name": "coderoller",
   "version": "1.0.0",
-  "description": "",
+  "description": "A privacy-first, local-first coding activity tracker for the terminal.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "productivity",
+    "tracking",
+    "developer-tools",
+    "cli",
+    "privacy"
+  ],
+  "author": "Coderoller Team",
   "license": "ISC",
   "type": "module",
   "dependencies": {
