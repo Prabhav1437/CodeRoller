@@ -2,6 +2,7 @@ import sqlite3 from 'sqlite3';
 import { open } from 'sqlite';
 import path from 'path';
 import os from 'os';
+import chalk from 'chalk';
 
 const DB_PATH = path.join(os.homedir(), '.coderoller.db');
 
@@ -14,31 +15,36 @@ let dbInstance = null;
 async function getDb() {
   if (dbInstance) return dbInstance;
 
-  dbInstance = await open({
-    filename: DB_PATH,
-    driver: sqlite3.Database
-  });
+  try {
+    dbInstance = await open({
+      filename: DB_PATH,
+      driver: sqlite3.Database
+    });
 
-  await dbInstance.exec(`
-    CREATE TABLE IF NOT EXISTS activity (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      project_name TEXT,
-      file_path TEXT,
-      language TEXT,
-      timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
-      branch TEXT
-    );
+    await dbInstance.exec(`
+      CREATE TABLE IF NOT EXISTS activity (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        project_name TEXT,
+        file_path TEXT,
+        language TEXT,
+        timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
+        branch TEXT
+      );
 
-    CREATE TABLE IF NOT EXISTS sessions (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      project_name TEXT,
-      start_time DATETIME,
-      end_time DATETIME,
-      duration INTEGER
-    );
-  `);
+      CREATE TABLE IF NOT EXISTS sessions (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        project_name TEXT,
+        start_time DATETIME,
+        end_time DATETIME,
+        duration INTEGER
+      );
+    `);
 
-  return dbInstance;
+    return dbInstance;
+  } catch (error) {
+    console.error(chalk.red('Failed to connect to the database:'), error.message);
+    process.exit(1);
+  }
 }
 
 /**
