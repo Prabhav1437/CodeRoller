@@ -1,5 +1,3 @@
-import { open } from 'sqlite';
-import sqlite3 from 'sqlite3';
 import path from 'path';
 import os from 'os';
 import chalk from 'chalk';
@@ -15,13 +13,10 @@ export async function clearCommand() {
 
     console.log(chalk.red.bold('WARNING: This will delete all your tracked activity!'));
 
-    // In a real CLI, we might want to ask for confirmation, 
-    // but for now let's just do it if they run this specific command.
-
     try {
         fs.unlinkSync(DB_PATH);
-        console.log(chalk.green('Database cleared successfully.'));
+        console.log(chalk.green('coderoller database cleared successfully.'));
     } catch (error) {
-        console.error(chalk.red('Failed to clear database:'), error.message);
+        console.error(chalk.red('Failed to clear coderoller database:'), error.message);
     }
 }

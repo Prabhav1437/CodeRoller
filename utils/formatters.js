@@ -1,5 +1,4 @@
 /**
- * Format seconds into a human-readable duration string.
  * @param {number} seconds 
  * @returns {string}
  */
