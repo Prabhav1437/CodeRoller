@@ -1,0 +1,23 @@
+import fs from 'fs';
+import os from 'os';
+import path from 'path';
+import chalk from 'chalk';
+
+const PID_FILE = path.join(os.homedir(), '.coderoller.pid');
+
+export async function stopCommand() {
+    if (!fs.existsSync(PID_FILE)) {
+        console.log(chalk.yellow('coderoller is not running.'));
+        return;
+    }
+
+    const pid = fs.readFileSync(PID_FILE, 'utf8');
+    try {
+        process.kill(pid, 'SIGTERM');
+        fs.unlinkSync(PID_FILE);
+        console.log(chalk.red('coderoller tracking stopped.'));
+    } catch (e) {
+        console.log(chalk.red('Failed to stop coderoller. It might have already exited.'));
+        if (fs.existsSync(PID_FILE)) fs.unlinkSync(PID_FILE);
+    }
+}
