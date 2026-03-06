@@ -62,11 +62,11 @@ async function handleActivity(filePath) {
         currentSession = {
             projectName,
             startTime: new Date().toISOString(),
-            lastHeartbeat: now
+            trackActivity: now
         };
         console.log(`[${new Date().toLocaleTimeString()}] Starting session: ${projectName}`);
     } else {
-        currentSession.lastHeartbeat = now;
+        currentSession.trackActivity = now;
     }
 
     lastActivityTime = now;
@@ -75,8 +75,8 @@ async function handleActivity(filePath) {
 async function finalizeSession() {
     if (!currentSession) return;
 
-    const endTime = new Date(currentSession.lastHeartbeat).toISOString();
-    const durationInSeconds = Math.floor((currentSession.lastHeartbeat - new Date(currentSession.startTime).getTime()) / 1000);
+    const endTime = new Date(currentSession.trackActivity).toISOString();
+    const durationInSeconds = Math.floor((currentSession.trackActivity - new Date(currentSession.startTime).getTime()) / 1000);
 
     if (durationInSeconds > 10) {
         await saveSession({
