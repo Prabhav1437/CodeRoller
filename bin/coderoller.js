@@ -6,6 +6,7 @@ import { startCommand } from '../commands/start.js';
 import { stopCommand } from '../commands/stop.js';
 import { todayCommand } from '../commands/today.js';
 import { statusCommand } from '../commands/status.js';
+import { clearCommand } from '../commands/clear.js';
 
 const program = new Command();
 
@@ -43,5 +44,10 @@ program
     .command('status')
     .description('Check if tracking is active')
     .action(statusCommand);
+
+program
+    .command('clear')
+    .description('Reset the activity database (DANGEROUS)')
+    .action(clearCommand);
 
 program.parse();
