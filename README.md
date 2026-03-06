@@ -40,6 +40,11 @@ npm link
    coderoller stop
    ```
 
+5. **Clear activity history**:
+   ```bash
+   coderoller clear
+   ```
+
 ## Project Structure
 
 - `bin/`: CLI entry point.
