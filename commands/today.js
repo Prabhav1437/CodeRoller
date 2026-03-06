@@ -2,14 +2,7 @@ import Table from 'cli-table3';
 import chalk from 'chalk';
 import { getTodayActivity, getTodayCategorySummary, getTodayStats } from '../storage/db.js';
 import { formatDistanceToNow } from 'date-fns';
-
-function formatDuration(seconds) {
-    if (seconds <= 0) return '0m';
-    const h = Math.floor(seconds / 3600);
-    const m = Math.floor((seconds % 3600) / 60);
-    if (h > 0) return `${h}h ${m}m`;
-    return `${m}m`;
-}
+import { formatDuration } from '../utils/formatters.js';
 
 export async function todayCommand() {
     const projects = await getTodayActivity();
