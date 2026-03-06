@@ -20,7 +20,7 @@ function findProjectRoot(filePath) {
             currentDir = parent;
         }
     } catch (e) { }
-    return 'idk';
+    return 'Unknown Project';
 }
 
 function findGitBranch(filePath) {
