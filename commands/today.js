@@ -40,13 +40,13 @@ export async function todayCommand() {
         activityTable.push([chalk.dim('Idle'), chalk.dim(formatDuration(idleSeconds))]);
     }
 
-    console.log(chalk.bold(`\n Activity Breakdown`));
+    console.log(chalk.bold.cyan(`\n 📊 Activity Breakdown`));
     console.log(activityTable.toString());
 
     const projectTable = new Table({
-        head: [chalk.cyan('Project'), chalk.cyan('Duration'), chalk.cyan('Last Active')],
+        head: [chalk.blueBright('Project'), chalk.blueBright('Duration'), chalk.blueBright('Last Active')],
         colWidths: [25, 15, 20],
-        style: { head: [], border: [] }
+        style: { head: [], border: ['dim'] }
     });
 
     projects.forEach(row => {
@@ -54,11 +54,15 @@ export async function todayCommand() {
             ? formatDistanceToNow(new Date(row.last_active), { addSuffix: true })
             : 'never';
 
-        projectTable.push([row.project_name, formatDuration(row.total_duration), lastActiveStr]);
+        projectTable.push([
+            chalk.white(row.project_name),
+            chalk.yellow(formatDuration(row.total_duration)),
+            chalk.dim(lastActiveStr)
+        ]);
     });
 
-    console.log(chalk.bold(`\n Top Projects`));
+    console.log(chalk.bold.cyan(`\n 📁 Top Projects`));
     console.log(projectTable.toString());
 
-    console.log(chalk.dim(`\nTotal tracked time: `) + chalk.green(formatDuration(stats.total_duration)) + `\n`);
+    console.log(`\n${chalk.gray('Total tracked time today:')} ${chalk.bold.greenBright(formatDuration(stats.total_duration))}\n`);
 }
