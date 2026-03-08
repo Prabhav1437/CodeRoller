@@ -8,10 +8,6 @@ const DB_PATH = path.join(os.homedir(), '.coderoller.db');
 
 let dbInstance = null;
 
-/**
- * Get or initialize the SQLite database connection.
- * @returns {Promise<import('sqlite').Database>}
- */
 async function getDb() {
   if (dbInstance) return dbInstance;
 
@@ -47,14 +43,6 @@ async function getDb() {
   }
 }
 
-/**
- * Log a single activity event.
- * @param {Object} params
- * @param {string} params.projectName
- * @param {string} params.filePath
- * @param {string} params.language
- * @param {string} params.branch
- */
 export async function logActivity({ projectName, filePath, language, branch }) {
   const db = await getDb();
   return await db.run(`
@@ -63,14 +51,6 @@ export async function logActivity({ projectName, filePath, language, branch }) {
   `, projectName, filePath, language, branch);
 }
 
-/**
- * Save a session to the database.
- * @param {Object} session
- * @param {string} session.projectName
- * @param {string} session.startTime
- * @param {string} session.endTime
- * @param {number} session.duration
- */
 export async function saveSession(session) {
   const db = await getDb();
   return await db.run(`
@@ -79,10 +59,6 @@ export async function saveSession(session) {
   `, session.projectName, session.startTime, session.endTime, session.duration);
 }
 
-/**
- * Get aggregated activity for today per project.
- * @returns {Promise<Array<{project_name: string, total_duration: number, last_active: string}>>}
- */
 export async function getTodayActivity() {
   const db = await getDb();
   return await db.all(`
@@ -93,10 +69,6 @@ export async function getTodayActivity() {
   `);
 }
 
-/**
- * Get a summary of activity categories for today.
- * @returns {Promise<Array<{category: string, total_duration: number}>>}
- */
 export async function getTodayCategorySummary() {
   const db = await getDb();
   const total = await db.get(`SELECT SUM(duration) as total FROM sessions WHERE date(start_time) = date('now', 'localtime')`);
@@ -125,10 +97,6 @@ export async function getTodayCategorySummary() {
   })).sort((a, b) => b.total_duration - a.total_duration);
 }
 
-/**
- * Get overall statistics for today.
- * @returns {Promise<{first_active: string, last_active: string, total_duration: number}>}
- */
 export async function getTodayStats() {
   const db = await getDb();
   return await db.get(`

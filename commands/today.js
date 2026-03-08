@@ -5,6 +5,12 @@ import { formatDistanceToNow } from 'date-fns';
 import { formatDuration } from '../utils/formatters.js';
 
 export async function todayCommand() {
+
+    console.log(chalk.cyan(`
+____ _____  ___   ____ ____  ____          _____ ____
+|    |   |  |  \\ |___ |__/  |  | |    |    |___ |__/
+|___ |___|  |__/ |___ |  \\ |__| |___ |___ |___ |  \\
+    `.trim()));
     const projects = await getTodayActivity();
     const categories = await getTodayCategorySummary();
     const stats = await getTodayStats();

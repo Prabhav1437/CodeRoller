@@ -6,6 +6,12 @@ import chalk from 'chalk';
 const PID_FILE = path.join(os.homedir(), '.coderoller.pid');
 
 export async function statusCommand() {
+
+    console.log(chalk.cyan(`
+____ _____  ___   ____ ____  ____          _____ ____
+|    |   |  |  \\ |___ |__/  |  | |    |    |___ |__/
+|___ |___|  |__/ |___ |  \\ |__| |___ |___ |___ |  \\
+    `.trim()));
     if (!fs.existsSync(PID_FILE)) {
         console.log(chalk.gray('coderoller is ') + chalk.red('not running'));
         return;

@@ -10,10 +10,16 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const PID_FILE = path.join(os.homedir(), '.coderoller.pid');
 
 export async function startCommand() {
+    console.log(chalk.cyan(`
+____ _____  ___   ___  ___  ___           ____ ____
+|    |   |  |  \\ |___ |__/ |  | |    |    |___ |__/
+|___ |___|  |__/ |___ |  \\ |__| |___ |___ |___ |  \\
+    `.trim()));
+
     if (fs.existsSync(PID_FILE)) {
         const pid = fs.readFileSync(PID_FILE, 'utf8');
         try {
-            process.kill(pid, 0);
+            process.kill(Number(pid), 0);
             console.log(chalk.yellow('coderoller is already running.'));
             return;
         } catch (e) {

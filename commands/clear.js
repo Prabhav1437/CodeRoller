@@ -6,6 +6,12 @@ import fs from 'fs';
 const DB_PATH = path.join(os.homedir(), '.coderoller.db');
 
 export async function clearCommand() {
+
+    console.log(chalk.cyan(`
+____ _____  ___   ____ ____  ____          _____ ____
+|    |   |  |  \\ |___ |__/  |  | |    |    |___ |__/
+|___ |___|  |__/ |___ |  \\ |__| |___ |___ |___ |  \\
+    `.trim()));
     if (!fs.existsSync(DB_PATH)) {
         console.log(chalk.yellow('Database file not found. Nothing to clear.'));
         return;
